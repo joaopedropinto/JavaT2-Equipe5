@@ -305,8 +305,8 @@ public class GerenciaCoelho {
         String matriculaImovel = scanner.nextLine();
         for (Imovel imovel : imoveis) {
             if (imovel.getMatricula().equalsIgnoreCase(matriculaImovel)) {
-                //Imovel imovelAchado = imovel;
-                Fatura fatura = new Fatura(imovel.getUltimaLeitura(), imovel.getPenultimaLeitura());
+               
+                Fatura fatura = new Fatura(imovel.getUltimaLeitura(), imovel.getPenultimaLeitura(), imovel);
                 faturas.add(fatura);
                 System.out.println("Fatura criada com sucesso!");
                 System.out.print("Nova leitura atual (em KWh): ");
@@ -314,11 +314,10 @@ public class GerenciaCoelho {
                 imovel.setPenultimaLeitura(imovel.getUltimaLeitura());
                 imovel.setUltimaLeitura(novaLeitura);
                 System.out.println("Leituras atualizadas com sucesso!");
-            }else {
-            	System.out.println("Imovel não encontrado!");
-            	
+                return;
             }
         }
+        System.out.println("Imovel não encontrado!");
     }
     
     private static void listarTodasFaturas() {
