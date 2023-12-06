@@ -8,6 +8,15 @@ public class GerenciaCoelho {
     private static ArrayList<Imovel> imoveis = new ArrayList<>();
     private static ArrayList<Fatura> faturas = new ArrayList<>();
     
+    static Cliente buscarClienteCPF(String cpf) {
+		for (Cliente cliente : clientes) {
+			if (cliente.getCpf().equals(cpf)) {
+				return cliente;
+			}
+		}
+		return null;
+	}
+    
     public static void menuClientes(){
 		Scanner scanner = new Scanner(System.in); 
 		while (true) {
@@ -61,17 +70,17 @@ public class GerenciaCoelho {
 	private static void consultarCliente(Scanner scanner) {
 	    System.out.print("Digite o CPF do cliente: ");
 	    String cpfConsulta = scanner.nextLine();
-
-	    for (Cliente cliente : clientes) {
-	        if (cliente.getCpf().equals(cpfConsulta)) {
-	            System.out.println("Cliente encontrado:");
-	            System.out.println("Nome: " + cliente.getNome());
-	            System.out.println("CPF: " + cliente.getCpf());
-	            return;
-	        }
+	    Cliente cliente = buscarClienteCPF(cpfConsulta);
+	    
+	    if(cliente == null) {
+	    	System.out.println("Cliente não encontrado.");
+	    	return;
 	    }
-
-	    System.out.println("Cliente não encontrado.");
+	  
+  		System.out.println("Cliente encontrado:");
+        System.out.println("Nome: " + cliente.getNome());
+        System.out.println("CPF: " + cliente.getCpf());
+        return;
 	}
 	
 	private static void listarClientes() {
@@ -88,9 +97,15 @@ public class GerenciaCoelho {
 	private static void excluirCliente(Scanner scanner) {
 	    System.out.print("Digite o CPF do cliente a ser excluído: ");
 	    String cpfExcluir = scanner.nextLine();
-
-	    clientes.removeIf(cliente -> cliente.getCpf().equals(cpfExcluir));
-	    System.out.println("Cliente excluído com sucesso!");
+	    Cliente cliente = buscarClienteCPF(cpfExcluir);
+	    
+	    if(cliente == null) {
+	    	System.out.println("Cliente não encontrado.");
+	    	return;
+	    }
+        clientes.remove(cliente);
+        System.out.println("Cliente excluído com sucesso!");
+        return;   
 	}
 	
 	private static void alterarCliente(Scanner scanner) {
@@ -151,75 +166,103 @@ public class GerenciaCoelho {
     }
 
     private static void incluirImovel(Scanner scanner) {
-    	System.out.print("Matricula do imóvel: ");
+    	System.out.println("\n=== Incluindo imóvel ===");
+    	System.out.println("Digite o CPF do cliente: ");
+	    String cpfCliente = scanner.nextLine();
+	    
+	    Cliente cliente = buscarClienteCPF(cpfCliente);
+	    if(cliente == null) {
+	    	System.out.println("Cliente não encontrado!");
+	    	return;
+	    }
+	    
+    	System.out.println("Matricula do imóvel: ");
         String matricula = scanner.nextLine();
         
-        System.out.print("Endereço do imóvel: ");
+        System.out.println("Endereço do imóvel: ");
         String endereco = scanner.nextLine();
 
-        System.out.print("Última leitura (em KWh): ");
+        System.out.println("Última leitura (em KWh): ");
         double ultimaLeitura = scanner.nextDouble();
 
-        System.out.print("Penúltima leitura (em KWh): ");
+        System.out.println("Penúltima leitura (em KWh): ");
         double penultimaLeitura = scanner.nextDouble();
-
-        imoveis.add(new Imovel(matricula, endereco, ultimaLeitura, penultimaLeitura));
+        
+        Imovel imovel = new Imovel(matricula, endereco, ultimaLeitura, penultimaLeitura);
+        cliente.adicionarImovel(imovel);
         System.out.println("Imóvel adicionado com sucesso!");
     }
 
     private static void consultarImovel(Scanner scanner) {
-        System.out.print("Digite a matricula do imóvel: ");
+        System.out.println("Digite a matricula do imóvel: ");
         String matriculaConsulta = scanner.nextLine();
-
-        for (Imovel imovel : imoveis) {
-            if (imovel.getMatricula().equalsIgnoreCase(matriculaConsulta)) {
-                System.out.println("Imóvel encontrado:");
-                System.out.println("Matricula: " + imovel.getMatricula());
-                System.out.println("Endereço: " + imovel.getEndereco());
-                System.out.println("Última Leitura: " + imovel.getUltimaLeitura() + " KWh");
-                System.out.println("Penúltima Leitura: " + imovel.getPenultimaLeitura() + " KWh");
-                return;
-            }
+        
+        for(Cliente cliente : clientes) {
+        	for (Imovel imovel : cliente.getImoveis()) {
+        		if (imovel.getMatricula().equalsIgnoreCase(matriculaConsulta)) {
+        			System.out.println("Imóvel encontrado:");
+        			System.out.println("Matricula: " + imovel.getMatricula());
+        			System.out.println("Endereço: " + imovel.getEndereco());
+        			System.out.println("Última Leitura: " + imovel.getUltimaLeitura() + " KWh");
+        			System.out.println("Penúltima Leitura: " + imovel.getPenultimaLeitura() + " KWh");
+        			return;
+        		}
+        	}
         }
 
         System.out.println("Imóvel não encontrado.");
     }
 
     private static void listarImoveis() {
-        if (imoveis.isEmpty()) {
-            System.out.println("Nenhum imóvel cadastrado.");
-        } else {
             System.out.println("Lista de Imóveis:");
-            for (Imovel imovel : imoveis) {
-                System.out.println("Matricula: " + imovel.getMatricula() +
-                		", Endereço: " + imovel.getEndereco() +
-                        ", Última Leitura: " + imovel.getUltimaLeitura() +
-                        ", Penúltima Leitura: " + imovel.getPenultimaLeitura());
+            for(Cliente cliente : clientes) {
+            	for (Imovel imovel : cliente.getImoveis()) {
+            		System.out.println("Matricula: " + imovel.getMatricula() +
+            				", Endereço: " + imovel.getEndereco() +
+            				", Última Leitura: " + imovel.getUltimaLeitura() +
+            				", Penúltima Leitura: " + imovel.getPenultimaLeitura());
+            	}
             }
         }
-    }
 
     private static void excluirImovel(Scanner scanner) {
         System.out.print("Digite a matricula do imóvel a ser excluído: ");
         String matriculaExcluir = scanner.nextLine();
 
-        imoveis.removeIf(imovel -> imovel.getMatricula().equalsIgnoreCase(matriculaExcluir));
-        System.out.println("Imóvel excluído com sucesso!");
+        for(Cliente cliente : clientes) {
+        	for (Imovel imovel : cliente.getImoveis()) {
+        		if(imovel.getMatricula().equalsIgnoreCase(matriculaExcluir)) {
+        			cliente.excluiImovel(imovel);
+        			System.out.println("Imovel excluído com sucesso!");
+        		}
+        	}
+    	}
+        System.out.println("Imóvel não encontrado!");
     }
 
     private static void alterarImovel(Scanner scanner) {
         System.out.print("Digite a matricula do imóvel para alterar: ");
         String matriculaAlterar = scanner.nextLine();
 
-        for (Imovel imovel : imoveis) {
-            if (imovel.getEndereco().equalsIgnoreCase(matriculaAlterar)) {
-                System.out.print("Digite o endereço): ");
-                String novoEndereco = scanner.nextLine();
-                imovel.setEndereco(novoEndereco);
-                System.out.println("Endereço alterado com sucesso!");
-                return;
-            }
-        }
+        for(Cliente cliente : clientes) {
+        	for (Imovel imovel : cliente.getImoveis()) {
+        		
+	            if (imovel.getMatricula().equalsIgnoreCase(matriculaAlterar)) {
+	                System.out.print("Digite o novo endereço): ");
+	                scanner.nextLine();
+	                String novoEndereco = scanner.nextLine();
+	                System.out.println("Digite a última leitura: ");
+					double novaUltimaLeitura = scanner.nextDouble();
+					System.out.println("Digite a penúltima leitura: ");
+					double novaPenultimaLeitura = scanner.nextDouble();
+	                imovel.setEndereco(novoEndereco);
+	                imovel.setPenultimaLeitura(novaPenultimaLeitura);
+	                imovel.setUltimaLeitura(novaUltimaLeitura);
+	                System.out.println("Imovel alterado com sucesso!");
+	                return;
+	            }
+        	}
+    	}
 
         System.out.println("Imóvel não encontrado.");
     }
@@ -319,9 +362,9 @@ public class GerenciaCoelho {
     	
     	 while (true) {
              System.out.println("\n=== Menu Pagamentos ===");
-             System.out.println("1. Criar Fatura");
-             System.out.println("2. Listar Todas as Faturas");
-             System.out.println("3. Listar Faturas em Aberto");
+             System.out.println("1. Criar Pagamento");
+             System.out.println("2. Listar Pagamentos");
+             System.out.println("3. Listar Pagamentos por Faturas");
              System.out.println("0. Voltar ao Menu Principal");
              System.out.print("Escolha uma opção: ");
 
@@ -330,7 +373,7 @@ public class GerenciaCoelho {
              
              switch (opcao) {
              case 1:
-                 criarFatura(scanner);
+                 criarPagamento(scanner);
                  break;
              case 2:
                  listarTodasFaturas();
@@ -345,7 +388,20 @@ public class GerenciaCoelho {
              }
 
     	 }
-
+    }
+    private static void criarPagamento(Scanner scanner) {
+    	System.out.print("Insira o cpf do cliente para realizar o pagamento: ");
+    	String cpfCliente = scanner.nextLine();
+    	Cliente cliente = buscarClienteCPF(cpfCliente);
+    	
+    	if (cliente == null) {
+    		System.out.println("Cliente não encontrado!");
+    		return;
+    	}
+    	System.out.println("Digite a matrícula do imóvel que deseja pagar a fatura: ");
+     	int matricula = scanner.nextInt();
+    	
+    	
     }
 }
 
