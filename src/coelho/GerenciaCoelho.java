@@ -456,22 +456,32 @@ public class GerenciaCoelho {
 
     private static void incluirFalha(Scanner scanner) {
     	System.out.println("\n=== Criando Falha ===");
+    	System.out.println("Informe a matrícula do imóvel: ");
+    	String matriculaImovel = scanner.nextLine();
+    	for(Cliente cliente: clientes) {
+    		for(Imovel imovel: cliente.getImoveis()) {
+    			if (imovel.getMatricula().equalsIgnoreCase(matriculaImovel)) {
+    				System.out.print("Tipo de Falha (Geração/Distribuição): ");
+    		        String tipo = scanner.nextLine();
 
-        System.out.print("Tipo de Falha (Geração/Distribuição): ");
-        String tipo = scanner.nextLine();
+    		        System.out.print("Descrição da Falha: ");
+    		        String descricao = scanner.nextLine();
 
-        System.out.print("Descrição da Falha: ");
-        String descricao = scanner.nextLine();
+    		        Date dataInicio = new Date();
+    		        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+    		        String dataInicioString = dateFormat.format(dataInicio);
 
-        Date dataInicio = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        String dataInicioString = dateFormat.format(dataInicio);
+    		        Falha novaFalha = new Falha(imovel, tipo, descricao, dataInicioString);
 
-        Falha novaFalha = new Falha(tipo, descricao, dataInicioString);
+    		        listaFalhas.add(novaFalha);
 
-        listaFalhas.add(novaFalha);
-
-        System.out.println("Falha adicionada com sucesso!");
+    		        System.out.println("Falha adicionada com sucesso!");
+    		        return;
+    			}
+    			
+    		}
+    	}
+    	System.out.println("Imovel não encontrado, não é possível incluir uma falha!");
     }
 
     private static void listarFalhas() {
