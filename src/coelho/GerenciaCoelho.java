@@ -303,20 +303,25 @@ public class GerenciaCoelho {
     private static void criarFatura(Scanner scanner) {
         System.out.print("Insira a matrícula do imóvel para criar a fatura: ");
         String matriculaImovel = scanner.nextLine();
-        for (Imovel imovel : imoveis) {
-            if (imovel.getMatricula().equalsIgnoreCase(matriculaImovel)) {
-               
-                Fatura fatura = new Fatura(imovel.getUltimaLeitura(), imovel.getPenultimaLeitura(), imovel);
-                faturas.add(fatura);
-                System.out.println("Fatura criada com sucesso!");
-                System.out.print("Nova leitura atual (em KWh): ");
-                double novaLeitura = scanner.nextDouble();
-                imovel.setPenultimaLeitura(imovel.getUltimaLeitura());
-                imovel.setUltimaLeitura(novaLeitura);
-                System.out.println("Leituras atualizadas com sucesso!");
-                return;
-            }
+        for(Cliente cliente : clientes) {    	
+        	for (Imovel imovel :  cliente.getImoveis()) {
+        		if (imovel.getMatricula().equalsIgnoreCase(matriculaImovel)) {
+        			double ultimaLeitura = imovel.getUltimaLeitura();
+        			double penultimaLeitura = imovel.getPenultimaLeitura();
+        			
+        			Fatura fatura = new Fatura(ultimaLeitura, penultimaLeitura, imovel);
+        			faturas.add(fatura);
+        			System.out.println("Fatura criada com sucesso!");
+        			System.out.print("Nova leitura atual (em KWh): ");
+        			double novaLeitura = scanner.nextDouble();
+        			imovel.setPenultimaLeitura(ultimaLeitura);
+        			imovel.setUltimaLeitura(novaLeitura);
+        			System.out.println("Leituras atualizadas com sucesso!");
+        			return;
+        		}
+        	}
         }
+        
         System.out.println("Imovel não encontrado!");
     }
     
