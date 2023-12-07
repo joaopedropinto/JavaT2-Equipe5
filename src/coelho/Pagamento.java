@@ -2,31 +2,31 @@ package coelho;
 import java.util.*;
 
 public class Pagamento {
-	private double valor;
-	private Date data;
-	private Reembolso reembolso;
+    private String matriculaFatura;
+    private double valor;
+    private Date data;
+    private boolean reembolso;
 
-	public Pagamento(double valor) {
-		this.valor = valor;
-		data = new Date();
-	}
+    public Pagamento(String matriculaFatura, double valor) {
+        this.matriculaFatura = matriculaFatura;
+        this.valor = valor;
+        this.data = new Date();
+        this.reembolso = false;
+    }
 
-	public void criaReembolso(double valor) {
-		reembolso = new Reembolso(valor);
-	}
-	
-	public Reembolso getReembolso() {
-		return reembolso;
-	}
+    public String getMatriculaFatura() {
+        return matriculaFatura;
+    }
 
-	public double getValor() {
-		return valor;
-	}
+    public double getValor() {
+        return valor;
+    }
 
+    public Date getData() {
+        return data;
+    }
 
-	public Date getData() {
-		return data;
-	}
-	
-	
+    public boolean isReembolso() {
+        return reembolso;
+    }
 }
