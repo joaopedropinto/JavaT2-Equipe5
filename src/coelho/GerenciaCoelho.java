@@ -59,10 +59,11 @@ public class GerenciaCoelho {
 	}
 	
 	private static void incluirCliente(Scanner scanner) {
-        System.out.print("Nome do cliente: ");
+		System.out.println("\n=== Adicionando Cliente ===");
+        System.out.println("Nome do cliente: ");
         String nome = scanner.nextLine();
 
-        System.out.print("CPF do cliente: ");
+        System.out.println("CPF do cliente: ");
         String cpf = scanner.nextLine();
 
         clientes.add(new Cliente(cpf, nome));
@@ -70,7 +71,8 @@ public class GerenciaCoelho {
     }
 	
 	private static void consultarCliente(Scanner scanner) {
-	    System.out.print("Digite o CPF do cliente: ");
+		System.out.println("\n=== Consultando Cliente ===");
+	    System.out.println("Digite o CPF do cliente: ");
 	    String cpfConsulta = scanner.nextLine();
 	    Cliente cliente = buscarClienteCPF(cpfConsulta);
 	    
@@ -89,7 +91,7 @@ public class GerenciaCoelho {
 	    if (clientes.isEmpty()) {
 	        System.out.println("Nenhum cliente cadastrado.");
 	    } else {
-	        System.out.println("Lista de Clientes:");
+			System.out.println("\n=== Lista de Clientes ===");
 	        for (Cliente cliente : clientes) {
 	            System.out.println("Nome: " + cliente.getNome() + ", CPF: " + cliente.getCpf());
 	        }
@@ -97,6 +99,7 @@ public class GerenciaCoelho {
 	}
 	
 	private static void excluirCliente(Scanner scanner) {
+		System.out.println("\n=== Excluindo Cliente ===");
 	    System.out.print("Digite o CPF do cliente a ser excluído: ");
 	    String cpfExcluir = scanner.nextLine();
 	    Cliente cliente = buscarClienteCPF(cpfExcluir);
@@ -111,6 +114,7 @@ public class GerenciaCoelho {
 	}
 	
 	private static void alterarCliente(Scanner scanner) {
+		System.out.println("\n=== Alterando Cliente ===");
 	    System.out.print("Digite o CPF do cliente a ser alterado: ");
 	    String cpfAlterar = scanner.nextLine();
 
@@ -168,7 +172,7 @@ public class GerenciaCoelho {
     }
 
     private static void incluirImovel(Scanner scanner) {
-    	System.out.println("\n=== Incluindo imóvel ===");
+    	System.out.println("\n=== Incluindo Imóvel ===");
     	System.out.println("Digite o CPF do cliente: ");
 	    String cpfCliente = scanner.nextLine();
 	    
@@ -196,6 +200,7 @@ public class GerenciaCoelho {
     }
 
     private static void consultarImovel(Scanner scanner) {
+    	System.out.println("\n=== Consultando Imóvel ===");
         System.out.println("Digite a matricula do imóvel: ");
         String matriculaConsulta = scanner.nextLine();
         
@@ -216,7 +221,7 @@ public class GerenciaCoelho {
     }
 
     private static void listarImoveis() {
-            System.out.println("Lista de Imóveis:");
+    	System.out.println("\n=== Lista de imóveis ===");
             for(Cliente cliente : clientes) {
             	for (Imovel imovel : cliente.getImoveis()) {
             		System.out.println("Matricula: " + imovel.getMatricula() +
@@ -228,6 +233,7 @@ public class GerenciaCoelho {
         }
 
     private static void excluirImovel(Scanner scanner) {
+    	System.out.println("\n=== Excluindo Imóvel ===");
         System.out.print("Digite a matricula do imóvel a ser excluído: ");
         String matriculaExcluir = scanner.nextLine();
 
@@ -243,6 +249,7 @@ public class GerenciaCoelho {
     }
 
     private static void alterarImovel(Scanner scanner) {
+    	System.out.println("\n=== Alterando Imóvel ===");
         System.out.print("Digite a matricula do imóvel para alterar: ");
         String matriculaAlterar = scanner.nextLine();
 
@@ -303,6 +310,8 @@ public class GerenciaCoelho {
     }
     
     private static void criarFatura(Scanner scanner) {
+    	System.out.println("\n=== Criando Fatura ===");
+
         System.out.print("Insira a matrícula do imóvel para criar a fatura: ");
         String matriculaImovel = scanner.nextLine();
         for(Cliente cliente : clientes) {    	
@@ -331,7 +340,7 @@ public class GerenciaCoelho {
         if (faturas.isEmpty()) {
             System.out.println("Nenhuma fatura cadastrada.");
         } else {
-            System.out.println("Lista de Todas as Faturas:");
+        	System.out.println("\n=== Listando Faturas ===");
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             for (Fatura fatura : faturas) {
                 System.out.println("Data de Emissão: " + dateFormat.format(fatura.getDataEmissao()));
@@ -348,7 +357,7 @@ public class GerenciaCoelho {
         if (faturas.isEmpty()) {
             System.out.println("Nenhuma fatura em aberto.");
         } else {
-            System.out.println("Lista de Faturas em Aberto:");
+        	System.out.println("\n=== Listando Faturas em Aberto ===");
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
             for (Fatura fatura : faturas) {
                 if (!fatura.isQuitada()) {
@@ -396,6 +405,8 @@ public class GerenciaCoelho {
     	 }
     }
     private static void criarPagamento(Scanner scanner) {
+    	System.out.println("\n=== Criando Pagamento ===");
+
     	System.out.print("Insira o cpf do cliente para realizar o pagamento: ");
     	String cpfCliente = scanner.nextLine();
     	Cliente cliente = buscarClienteCPF(cpfCliente);
@@ -444,6 +455,8 @@ public class GerenciaCoelho {
     }
 
     private static void incluirFalha(Scanner scanner) {
+    	System.out.println("\n=== Criando Falha ===");
+
         System.out.print("Tipo de Falha (Geração/Distribuição): ");
         String tipo = scanner.nextLine();
 
@@ -466,7 +479,7 @@ public class GerenciaCoelho {
             System.out.println("Nenhuma falha cadastrada.");
         } else {
         	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-            System.out.println("Lista de Falhas:");
+        	System.out.println("\n=== Lista de Falhas ===");
             int index = 1;
             for (Falha falha : listaFalhas) {
                 System.out.println(index + ". Tipo: " + falha.getTipo() + ", Descrição: " + falha.getDescricao() + ", Data início: " + dateFormat.format(falha.getDataInicio()));
@@ -476,6 +489,8 @@ public class GerenciaCoelho {
     }
 
     private static void encerrarReparo(Scanner scanner) {
+    	System.out.println("\n=== Encerrando Reparo ===");
+
         listarFalhas();
         System.out.print("Digite o número da falha a ser excluída: ");
         int numeroFalha = scanner.nextInt();
@@ -487,39 +502,7 @@ public class GerenciaCoelho {
             listaFalhas.remove(numeroFalha - 1); // Remove a falha pela posição na lista
             System.out.println("Falha excluída com sucesso!");
         }
-    	
-    	
-    	 while (true) {
-             System.out.println("\n=== Menu Pagamentos ===");
-             System.out.println("1. Criar Pagamento");
-             System.out.println("2. Listar Pagamentos");
-             System.out.println("3. Listar Pagamentos por Faturas");
-             System.out.println("0. Voltar ao Menu Principal");
-             System.out.print("Escolha uma opção: ");
-
-             int opcao = scanner.nextInt();
-             scanner.nextLine(); 
-             
-             switch (opcao) {
-             case 1:
-                 criarPagamento(scanner);
-                 break;
-             case 2:
-                 listarTodasFaturas();
-                 break;
-             case 3:
-                 listarFaturasEmAberto();
-                 break;
-             case 0:
-                 return;
-             default:
-                 System.out.println("Opção inválida. Tente novamente.");
-             }
-
-    	 }
     }
-    
-    
 }
 
 
