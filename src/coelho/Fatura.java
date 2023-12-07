@@ -9,14 +9,16 @@ public class Fatura {
     private double penultimaLeitura;
     private double valor;
     private boolean quitada;
+    private Imovel imovel;
     
-    public Fatura(double ultimaLeitura, double penultimaLeitura) {
+    public Fatura(double ultimaLeitura, double penultimaLeitura, Imovel imovel) {
     	
         this.dataEmissao = new Date();
         this.ultimaLeitura = ultimaLeitura;
         this.penultimaLeitura = penultimaLeitura;
         this.valor = calcularValor();
         this.quitada = false;
+        this.imovel = imovel;
     }
     
     private double calcularValor() {
