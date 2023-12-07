@@ -1,5 +1,8 @@
 package coelho;
 import java.text.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.*;
 
 public class GerenciaCoelho {
@@ -39,6 +42,15 @@ public class GerenciaCoelho {
         return null;
     }
 
+    private static Date parseDate(String dateString) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        try {
+            return dateFormat.parse(dateString);
+        } catch (ParseException e) {
+            System.out.println("Formato de data inválido. Use o formato dd/MM/yyyy HH:mm:ss");
+            return null;
+        }
+    }
     
     public static void menuClientes(){
 		Scanner scanner = new Scanner(System.in); 
@@ -601,9 +613,10 @@ public class GerenciaCoelho {
     
         System.out.print("Data de Previsão (Formato dd/MM/yyyy HH:mm:ss): ");
         String previsaoInicialString = scanner.nextLine();
+        Date previsaoInicial = parseDate(previsaoInicialString);
         
     
-        Reparo reparo = new Reparo(descricaoAtividade, previsaoInicialString, falhaAssociada);
+        Reparo reparo = new Reparo(descricaoAtividade, previsaoInicial, falhaAssociada);
         listaReparos.add(reparo);
     
         System.out.println("Reparo incluído com sucesso!");
