@@ -1,5 +1,4 @@
 package coelho;
-
 import java.util.*;
 
 public class App {

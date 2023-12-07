@@ -1,10 +1,6 @@
 package coelho;
-
 import java.text.*;
 import java.util.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
 
 public class GerenciaCoelho {
 
@@ -34,7 +30,7 @@ public class GerenciaCoelho {
 	        System.out.println("0. Voltar ao Menu Principal");
 	        System.out.print("Escolha uma opção: ");
 
-    public static void menuClientes() {
+    public static void menuClientes(){
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\n=== Gestão de Clientes ===");
@@ -554,10 +550,12 @@ public class GerenciaCoelho {
     }
 }
 
-// System.out.print("Nova leitura atual (em KWh): ");
-// double novaLeitura = scanner.nextDouble();
-// imovel.setPenultimaLeitura(imovel.getUltimaLeitura());
-// imovel.setUltimaLeitura(novaLeitura);
+
+//System.out.print("Nova leitura atual (em KWh): ");
+//double novaLeitura = scanner.nextDouble();
+//imovel.setPenultimaLeitura(imovel.getUltimaLeitura());
+//imovel.setUltimaLeitura(novaLeitura);
 //
-// System.out.println("Leituras alteradas com sucesso!");
-// return;
+//System.out.println("Leituras alteradas com sucesso!");
+//return;
+
