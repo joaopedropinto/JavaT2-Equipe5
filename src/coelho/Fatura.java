@@ -21,7 +21,15 @@ public class Fatura {
         this.imovel = imovel;
     }
     
-    private double calcularValor() {
+    public Imovel getImovel() {
+		return imovel;
+	}
+
+	public void setImovel(Imovel imovel) {
+		this.imovel = imovel;
+	}
+
+	private double calcularValor() {
         
         return 10 * (ultimaLeitura - penultimaLeitura);
     }
