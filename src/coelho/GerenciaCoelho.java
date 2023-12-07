@@ -8,7 +8,7 @@ public class GerenciaCoelho {
     private static ArrayList<Imovel> imoveis = new ArrayList<>();
     private static ArrayList<Fatura> faturas = new ArrayList<>();
     private static ArrayList<Falha> listaFalhas = new ArrayList<>();
-
+    private static ArrayList<Pagamento> pagamentos = new ArrayList<>();
     
     static Cliente buscarClienteCPF(String cpf) {
 		for (Cliente cliente : clientes) {
@@ -405,20 +405,36 @@ public class GerenciaCoelho {
     	 }
     }
     private static void criarPagamento(Scanner scanner) {
-    	System.out.println("\n=== Criando Pagamento ===");
-
-    	System.out.print("Insira o cpf do cliente para realizar o pagamento: ");
-    	String cpfCliente = scanner.nextLine();
-    	Cliente cliente = buscarClienteCPF(cpfCliente);
-    	
-    	if (cliente == null) {
-    		System.out.println("Cliente não encontrado!");
-    		return;
-    	}
-    	System.out.println("Digite a matrícula do imóvel que deseja pagar a fatura: ");
-     	int matricula = scanner.nextInt();
-    	
-    	
+        System.out.println("\n=== Criando Pagamento ===");
+    
+        System.out.print("Insira o cpf do cliente para realizar o pagamento: ");
+        String cpfCliente = scanner.nextLine();
+        Cliente cliente = buscarClienteCPF(cpfCliente);
+    
+        if (cliente == null) {
+            System.out.println("Cliente não encontrado!");
+            return;
+        }
+    
+        System.out.print("Digite a matrícula do imóvel que deseja pagar a fatura: ");
+        String matriculaImovel = scanner.nextLine();
+    
+        for (Fatura fatura : faturas) {
+            if (fatura.getImovel().getMatricula().equalsIgnoreCase(matriculaImovel) && !fatura.isQuitada()) {
+                System.out.print("Digite o valor do pagamento: ");
+                double valorPagamento = scanner.nextDouble();
+    
+                Pagamento pagamento = new Pagamento(fatura.getImovel().getMatricula(), valorPagamento);
+                pagamentos.add(pagamento);
+    
+                fatura.setQuitada(true);
+    
+                System.out.println("Pagamento registrado com sucesso!");
+                return;
+            }
+        }
+    
+        System.out.println("Fatura não encontrada ou já quitada!");
     }
     
     public static void menuFalhas() {
