@@ -11,12 +11,12 @@ public class App {
             System.out.println("2. Gestão de Imóveis");
             System.out.println("3. Gestão de Faturas");
             System.out.println("4. Gestão de Pagamentos");
+            System.out.println("5. Gestão de Falhas");
             System.out.println("0. Sair");
             System.out.print("Escolha uma opção: ");
 
             int opcao = scanner.nextInt();
             scanner.nextLine();
-            
             switch (opcao) {
                 case 1:
                     GerenciaCoelho.menuClientes();
@@ -29,6 +29,10 @@ public class App {
                     break;
                 case 4:
                 	GerenciaCoelho.menuPagamentos();
+                	break;
+                case 5:
+                	GerenciaCoelho.menuFalhas();
+                    break;
                 case 0:
                     System.out.println("Saindo do programa. Até mais!");
                     System.exit(0);
@@ -36,5 +40,6 @@ public class App {
                     System.out.println("Opção inválida. Tente novamente.");
             }
         }
+	
 	}
 }

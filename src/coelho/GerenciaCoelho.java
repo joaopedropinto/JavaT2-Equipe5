@@ -7,6 +7,8 @@ public class GerenciaCoelho {
 	private static ArrayList<Cliente> clientes = new ArrayList<>();
     private static ArrayList<Imovel> imoveis = new ArrayList<>();
     private static ArrayList<Fatura> faturas = new ArrayList<>();
+    private static ArrayList<Falha> listaFalhas = new ArrayList<>();
+
     
     static Cliente buscarClienteCPF(String cpf) {
 		for (Cliente cliente : clientes) {
@@ -407,14 +409,117 @@ public class GerenciaCoelho {
     	
     	
     }
+    
+    public static void menuFalhas() {
+        Scanner scanner = new Scanner(System.in);
+        int opcao;
+
+        while (true) {
+            System.out.println("\n=== Menu de Falhas ===");
+            System.out.println("1. Incluir Falhas");
+            System.out.println("2. Listar Falhas");
+            System.out.println("3. Encerrar Reparo");
+            System.out.println("0. Voltar ao Menu Principal");
+            System.out.print("Escolha uma opção: ");
+
+            opcao = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcao) {
+                case 1:
+                    incluirFalha(scanner);
+                    break;
+                case 2:
+                    listarFalhas();
+                    break;
+                case 3:
+                    encerrarReparo(scanner);
+                    break;
+                case 0:
+                    return; 
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
+            }
+        }
+    }
+
+    private static void incluirFalha(Scanner scanner) {
+        System.out.print("Tipo de Falha (Geração/Distribuição): ");
+        String tipo = scanner.nextLine();
+
+        System.out.print("Descrição da Falha: ");
+        String descricao = scanner.nextLine();
+
+        Date dataInicio = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        String dataInicioString = dateFormat.format(dataInicio);
+
+        Falha novaFalha = new Falha(tipo, descricao, dataInicioString);
+
+        listaFalhas.add(novaFalha);
+
+        System.out.println("Falha adicionada com sucesso!");
+    }
+
+    private static void listarFalhas() {
+        if (listaFalhas.isEmpty()) {
+            System.out.println("Nenhuma falha cadastrada.");
+        } else {
+        	SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            System.out.println("Lista de Falhas:");
+            int index = 1;
+            for (Falha falha : listaFalhas) {
+                System.out.println(index + ". Tipo: " + falha.getTipo() + ", Descrição: " + falha.getDescricao() + ", Data início: " + dateFormat.format(falha.getDataInicio()));
+                index++;
+            }
+        }
+    }
+
+    private static void encerrarReparo(Scanner scanner) {
+        listarFalhas();
+        System.out.print("Digite o número da falha a ser excluída: ");
+        int numeroFalha = scanner.nextInt();
+        scanner.nextLine();
+
+        if (numeroFalha < 1 || numeroFalha > listaFalhas.size()) {
+            System.out.println("Número de falha inválido.");
+        } else {
+            listaFalhas.remove(numeroFalha - 1); // Remove a falha pela posição na lista
+            System.out.println("Falha excluída com sucesso!");
+        }
+    	
+    	
+    	 while (true) {
+             System.out.println("\n=== Menu Pagamentos ===");
+             System.out.println("1. Criar Pagamento");
+             System.out.println("2. Listar Pagamentos");
+             System.out.println("3. Listar Pagamentos por Faturas");
+             System.out.println("0. Voltar ao Menu Principal");
+             System.out.print("Escolha uma opção: ");
+
+             int opcao = scanner.nextInt();
+             scanner.nextLine(); 
+             
+             switch (opcao) {
+             case 1:
+                 criarPagamento(scanner);
+                 break;
+             case 2:
+                 listarTodasFaturas();
+                 break;
+             case 3:
+                 listarFaturasEmAberto();
+                 break;
+             case 0:
+                 return;
+             default:
+                 System.out.println("Opção inválida. Tente novamente.");
+             }
+
+    	 }
+    }
+    
+    
 }
 
-
-//System.out.print("Nova leitura atual (em KWh): ");
-//double novaLeitura = scanner.nextDouble();
-//imovel.setPenultimaLeitura(imovel.getUltimaLeitura());
-//imovel.setUltimaLeitura(novaLeitura);
-//
-//System.out.println("Leituras alteradas com sucesso!");
-//return;
 
