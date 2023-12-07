@@ -390,12 +390,15 @@ public class GerenciaCoelho {
              case 1:
                  criarPagamento(scanner);
                  break;
-             case 2:
-                 listarTodasFaturas();
+            case 2:
+                 listarPagamentos();
                  break;
              case 3:
-                 listarFaturasEmAberto();
+                 System.out.print("Digite a matrícula da fatura para listar os pagamentos: ");
+                 String matriculaFatura = scanner.nextLine();
+                 listarPagamentosPorFatura(matriculaFatura);
                  break;
+             
              case 0:
                  return;
              default:
@@ -437,6 +440,33 @@ public class GerenciaCoelho {
         System.out.println("Fatura não encontrada ou já quitada!");
     }
     
+    private static void listarPagamentos() {
+        if (pagamentos.isEmpty()) {
+            System.out.println("Nenhum pagamento registrado.");
+        } else {
+            System.out.println("\n=== Lista de Pagamentos ===");
+            for (Pagamento pagamento : pagamentos) {
+                System.out.println("Matrícula da Fatura: " + pagamento.getMatriculaFatura());
+                System.out.println("Valor do Pagamento: R$" + pagamento.getValor());
+                System.out.println("Data do Pagamento: " + pagamento.getData());
+                System.out.println("Reembolso: " + (pagamento.isReembolso() ? "Sim" : "Não"));
+                System.out.println("-------------------------------");
+            }
+        }
+    }
+    
+    private static void listarPagamentosPorFatura(String matriculaFatura) {
+        System.out.println("\n=== Lista de Pagamentos para a Fatura ===");
+        for (Pagamento pagamento : pagamentos) {
+            if (pagamento.getMatriculaFatura().equalsIgnoreCase(matriculaFatura)) {
+                System.out.println("Matrícula da Fatura: " + pagamento.getMatriculaFatura());
+                System.out.println("Valor do Pagamento: R$" + pagamento.getValor());
+                System.out.println("Data do Pagamento: " + pagamento.getData());
+                System.out.println("Reembolso: " + (pagamento.isReembolso() ? "Sim" : "Não"));
+                System.out.println("-------------------------------");
+            }
+        }
+    }
     public static void menuFalhas() {
         Scanner scanner = new Scanner(System.in);
         int opcao;
