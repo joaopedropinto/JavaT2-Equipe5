@@ -3,7 +3,7 @@ package coelho;
 import java.util.Date;
 
 public class Falha {
-    private String tipo; 
+    private boolean tipo; 
     private String descricao;
     private boolean resolvida;
     private String previsao;
@@ -11,7 +11,7 @@ public class Falha {
     private Date dataFim;
     private Imovel imovel;
 
-    public Falha(Imovel imovel, String tipo, String descricao, String previsao) {
+    public Falha(Imovel imovel, boolean tipo, String descricao, String previsao) {
         this.imovel = imovel;
     	this.tipo = tipo;
         this.descricao = descricao;
@@ -24,11 +24,11 @@ public class Falha {
 		return imovel;
 	}
 
-	public String getTipo() {
+	public boolean getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(boolean tipo) {
         this.tipo = tipo;
     }
 

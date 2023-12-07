@@ -391,10 +391,10 @@ public class GerenciaCoelho {
                  criarPagamento(scanner);
                  break;
              case 2:
-                 listarTodasFaturas();
+            	 listarPagamentos();
                  break;
              case 3:
-                 listarFaturasEmAberto();
+            	 listarPagamentosFatura();
                  break;
              case 0:
                  return;
@@ -419,6 +419,13 @@ public class GerenciaCoelho {
      	int matricula = scanner.nextInt();
     	
     	
+    }
+    private static void listarPagamentos() {
+    	System.out.println("\n=== Listando Pagamentos ===");
+    }
+    
+    private static void listarPagamentosFatura() {
+    	System.out.println("\n=== Listando Pagamentos por Faturas ===");
     }
     
     public static void menuFalhas() {
@@ -461,9 +468,9 @@ public class GerenciaCoelho {
     	for(Cliente cliente: clientes) {
     		for(Imovel imovel: cliente.getImoveis()) {
     			if (imovel.getMatricula().equalsIgnoreCase(matriculaImovel)) {
-    				System.out.print("Tipo de Falha (Geração/Distribuição): ");
-    		        String tipo = scanner.nextLine();
-
+    				System.out.print("Tipo de Falha (0 - Geração/ 1 - Distribuição): ");
+    		        boolean tipoBool = scanner.hasNextLine();
+    		        scanner.nextLine();
     		        System.out.print("Descrição da Falha: ");
     		        String descricao = scanner.nextLine();
 
@@ -471,7 +478,7 @@ public class GerenciaCoelho {
     		        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     		        String dataInicioString = dateFormat.format(dataInicio);
 
-    		        Falha novaFalha = new Falha(imovel, tipo, descricao, dataInicioString);
+    		        Falha novaFalha = new Falha(imovel, tipoBool, descricao, dataInicioString);
 
     		        listaFalhas.add(novaFalha);
 
@@ -492,7 +499,7 @@ public class GerenciaCoelho {
         	System.out.println("\n=== Lista de Falhas ===");
             int index = 1;
             for (Falha falha : listaFalhas) {
-                System.out.println(index + ". Tipo: " + falha.getTipo() + ", Descrição: " + falha.getDescricao() + ", Data início: " + dateFormat.format(falha.getDataInicio()));
+                System.out.println(index + ". Tipo: " + (falha.getTipo() ? "Distribuição" : "Geração") + ", Descrição: " + falha.getDescricao() + ", Data início: " + dateFormat.format(falha.getDataInicio()));
                 index++;
             }
         }
